@@ -2,7 +2,7 @@ import express from 'express'
 
 import {config} from '@interactiveninja/config-reader'
 import cors from 'cors'
-import { getQ } from './getQuote';
+import { getQ, getQList } from './getQuote';
 
 let manager = config("config.json")
 let app = express()
@@ -20,8 +20,12 @@ app.use(function(req, res, next) {
 app.get("/",(res,req) =>{
     getQ().then(val => req.json(val)).catch(e => req.json(e))
 })
-app.get("/:id",(res,req) =>{
+app.get("/id/:id",(res,req) =>{
     getQ(Number(res.params.id)).then(val => req.json(val)).catch(e => req.json(e))
+})
+
+app.get("/list",(res,req) =>{
+    req.json(getQList())
 })
 
 

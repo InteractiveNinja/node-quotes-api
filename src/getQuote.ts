@@ -3,12 +3,16 @@ let manager = config("config.json")
 
 let json : [] = (manager.get("quotes") != undefined)? manager.get("quotes") : undefined 
 export let getQ = (index? : number | undefined):Promise<{}> =>{
-    return new Promise((good,bad) =>{
+    return new Promise((res,rej) =>{
 
-        if(json.length < 1) bad({error: "Config is not set correctly"});
+        if(json.length < 1) rej({error: "Config is not set correctly"});
 
         let i = (index !== undefined )? index : Math.floor(Math.random() * json.length);    
-        if(i > json.length) bad({error:"Index to high"})
-        good({index:i,text:json[i]})
+        if(i > json.length) rej({error:"Index to high"})
+        res({index:i,text:json[i]})
     })
+}
+
+export let getQList = () =>{
+    return json;
 }
