@@ -13,6 +13,12 @@ export let getQ = (index? : number | undefined):Promise<{}> =>{
     })
 }
 
-export let getQList = () =>{
-    return json;
+export let getQList = () : {id:number,value:string}[] =>{
+    let fullList : {id:number,value:string}[] = [];
+    for (let i = 0; i < json.length; i++) {
+        fullList.push({id:i,value:json[i]})
+        
+    }
+
+    return fullList;
 }
