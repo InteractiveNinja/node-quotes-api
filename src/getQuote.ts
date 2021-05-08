@@ -2,14 +2,14 @@ import {config} from '@interactiveninja/config-reader'
 let manager = config("config.json")
 
 let json : [] = (manager.get("quotes") != undefined)? manager.get("quotes") : undefined 
-export let getQ = (index? : number | undefined):Promise<{}> =>{
+export let getQ = (id? : number | undefined):Promise<{}> =>{
     return new Promise((res,rej) =>{
 
         if(json.length < 1) rej({error: "Config is not set correctly"});
 
-        let i = (index !== undefined )? index : Math.floor(Math.random() * json.length);    
-        if(i > json.length) rej({error:"Index to high"})
-        res({index:i,text:json[i]})
+        let i = (id !== undefined )? id : Math.floor(Math.random() * json.length);    
+        if(i > json.length) rej({error:"id not found"})
+        res({id:i,text:json[i]})
     })
 }
 
