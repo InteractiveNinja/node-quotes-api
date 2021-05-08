@@ -1,4 +1,4 @@
-import express from 'express'
+import express,{json} from 'express'
 
 import {config} from '@interactiveninja/config-reader'
 import cors from 'cors'
@@ -8,14 +8,15 @@ let manager = config("config.json")
 let app = express()
 
 app.use(cors())
+app.use(json())
 
 const PORT = manager.get("port")
 
-app.get("/",(res,req) =>{
-    getQ().then(val => req.json(val)).catch(e => req.json(e))
+app.get("/",(req,res) =>{
+    getQ(req.body).then(val => res.json(val)).catch(e => res.json(e))
 })
-app.get("/id/:id",(res,req) =>{
-    getQ(Number(res.params.id)).then(val => req.json(val)).catch(e => req.json(e))
+app.get("/id/:id",(req,res) =>{
+    getQ(req.body,Number(req.params.id)).then(val => res.json(val)).catch(e => res.json(e))
 })
 
 app.get("/list",(res,req) =>{
