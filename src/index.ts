@@ -12,15 +12,15 @@ app.use(json())
 
 const PORT = manager.get("port")
 
-app.get("/",(req,res) =>{
+app.post("/",(req,res) =>{
     getQ(req.body).then(val => res.json(val)).catch(e => res.json(e))
 })
-app.get("/id/:id",(req,res) =>{
+app.post("/id/:id",(req,res) =>{
     getQ(req.body,Number(req.params.id)).then(val => res.json(val)).catch(e => res.json(e))
 })
 
-app.get("/list",(res,req) =>{
-    req.json(getQList())
+app.post("/list",(req,res) =>{
+    res.json(getQList(req.body))
 })
 
 

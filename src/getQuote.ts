@@ -6,8 +6,11 @@ let json : [] = (manager.get("quotes") != undefined)? manager.get("quotes") : un
 
 env.config()
 
+interface InterFormaData {
+    key:string
+}
 
-export let getQ = (formData:{key:string},id? : number | undefined):Promise<{}> =>{
+export let getQ = (formData:InterFormaData,id? : number | undefined):Promise<{}> =>{
     return new Promise((res,rej) =>{
         if(formData.key == undefined || formData.key == "" || !isValideKey(formData.key) ) rej({error:"no valide apikey"})
         if(json.length < 1) rej({error: "Config is not set correctly"});
@@ -29,7 +32,9 @@ let isValideKey = (key: string): boolean =>
    return (key == process.env.KEY)
 }
 
-export let getQList = () : {id:number,value:string}[] =>{
+export let getQList = (formData:InterFormaData) : {}[] =>{
+
+    if(!isValideKey(formData.key)) return [{error:"no valide apikey"}]
     let fullList : {id:number,value:string}[] = [];
     for (let i = 0; i < json.length; i++) {
         fullList.push({id:i,value:json[i]})
